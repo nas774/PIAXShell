@@ -115,6 +115,9 @@ public class PIAXShell {
                         i++;
                         if (i < args.length) {
                             propfile = args[i];
+                        } else {
+                            logger.error("-p option requires a property filename.");
+                            return false;
                         }
                     }
                 }
@@ -124,12 +127,14 @@ public class PIAXShell {
                 File f = new File(propfile);
                 boolean fileexist = f.exists() && f.isFile();
 
-                if (!fileexist) {
-                    logger.warn("Property file not found. : " + propfile);
-                } else {
-                    if (PROPERTY_FILE.equals(propfile)) {
+                if (!fileexist && !PROPERTY_FILE.equals(propfile)) {
+                    logger.error("The property file you specified does not found. : " + propfile);
+                    return false;
+                }
+
+                if (fileexist) {
+                    if (PROPERTY_FILE.equals(propfile))
                         logger.info("Found default property file." );
-                    }
 
                     logger.info("Load from property file. : " + propfile);
                     // Try to read property file.
@@ -227,6 +232,8 @@ public class PIAXShell {
                         i++;
                         if (i < args.length) {
                             tmp_seed = args[i];
+                        } else {
+                            logger.error("-s option requires a seed peer's address.");
                         }
                         break;
                     case 'p':
@@ -240,17 +247,23 @@ public class PIAXShell {
                         i++;
                         if (i < args.length) {
                             tmp_agentprops_str = args[i];
+                        } else {
+                            logger.error("-A option requires a agent property filename or directory.");
                         }
                         break;
                     case 'a':
                         i++;
                         if (i < args.length) {
                             tmp_agtdir = args[i];
+                        } else {
+                            logger.error("-a option requires a agent classfile directorty.");
                         }
                         break;
                     case '?':
+                    case 'h':
                         return false;
                     default:
+                        logger.error("Found an undefined option : " + args[i]);
                         return false;
                     }
                 } else {
