@@ -512,15 +512,15 @@ public class PIAXShell {
                         + "  c)all agent_NO method arg ...\n"
                         + "  c)all aid:agent_ID method arg ...\n"
                         + "  c)all pid:peer_ID aid:agent_ID method arg ...\n"
-                        + "                  call remote agent method\n" + "  \n"
+                        + "                  call remote agent method\n"
                         + "  co,calloneway agent_NO method arg ...\n"
                         + "  co,calloneway aid:agent_ID method arg ...\n"
                         + "  co,calloneway pid:peer_ID aid:agent_ID method arg ...\n"
-                        + "                  callOneway remote agent method\n" + "  \n"
+                        + "                  callOneway remote agent method\n"
                         + "  ca,callasync agent_NO method arg ...\n"
                         + "  ca,callasync aid:agent_ID method arg ...\n"
                         + "  ca,callasync pid:peer_ID aid:agent_ID method arg ...\n"
-                        + "                  callAsync remote agent method\n" + "  \n"
+                        + "                  callAsync remote agent method\n"
                         + "  \n"
                         + "  dc,discover query method arg ...\n"
                         + "                  discoveryCall to agents by query\n"
@@ -530,11 +530,12 @@ public class PIAXShell {
                         + "                  discoveryCallAsync to agents by query\n"
                         + "  dcl,discoverlocation lng lat w h method arg ...\n"
                         + "                  discoveryCall to agents in (lng, lat, w, h) area\n"
+                        + "  \n"
                         + "  ?,help          show this help message\n"
                         + "  bye             exit\n" + "\n");
     }
 
-    static Pattern cmd_arg_divide = Pattern.compile("([a-zA-Z][\\w-]+)(\\s.+)?");
+    static Pattern cmd_arg_divide = Pattern.compile("([a-zA-Z][\\w-]*)(\\s.+)?");
     static Pattern arg_parse = Pattern.compile("\\s+(?:(?:\"((?:(?:\\\\\")|[^\"])*)\"?)|([^\"]\\S*))");
     private static String[] split(String line) {
         line = line.trim();
@@ -583,6 +584,9 @@ public class PIAXShell {
                         continue;
                     }
                     break;
+                }
+                if (input.equals("")) {
+                    continue;
                 }
                 String[] args = split(input);
                 if (args.length == 0) {
@@ -721,7 +725,7 @@ public class PIAXShell {
                             callAsync(agno, method, cargs);
                         }
                     } else if (args[1].toLowerCase().startsWith("aid:")) {
-                        AgentId agid = new AgentId(args[2].substring(4));
+                        AgentId agid = new AgentId(args[1].substring(4));
                         String method = args[2];
                         Object[] cargs = new String[args.length - 3];
                         for (int i = 0; i < cargs.length; i++) {
@@ -734,7 +738,7 @@ public class PIAXShell {
                         } else if (calltype == 2) {
                             callAsync(agid, method, cargs);
                         }
-                    } else if (args.length < 4 && args[1].toLowerCase().startsWith("pid:") && args[2].toLowerCase().startsWith("aid:")) {
+                    } else if (3 < args.length && args[1].toLowerCase().startsWith("pid:") && args[2].toLowerCase().startsWith("aid:")) {
                         PeerId pid = new PeerId(args[1].substring(4));
                         AgentId agid = new AgentId(args[2].substring(4));
                         String method = args[3];
