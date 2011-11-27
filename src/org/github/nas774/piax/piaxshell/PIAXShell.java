@@ -939,10 +939,18 @@ public class PIAXShell {
             try {
                 value = rset.getNext(3000);
             } catch (InterruptedException e) {
+                System.out.println(" Timeout.");
                 break;
             } catch (NoSuchElementException e) {
                 break;
             } catch (InvocationTargetException e) {
+                long etime = System.currentTimeMillis();
+                logger.warn(e.getMessage(), e);
+                System.out.println("\t>> cannot call agent.");
+                System.out.println(" peerId: " + rset.getThisPeerId());
+                AgentId agId = (AgentId) rset.getThisTargetId();
+                System.out.println(" agentId: " + agId);
+                System.out.println("\t## time (msec): " + (etime - stime));
                 continue;
             }
             long etime = System.currentTimeMillis();
@@ -962,12 +970,17 @@ public class PIAXShell {
                     while (rset.hasNext()) {
                         Object value;
                         try {
-                            value = rset.getNext(3000);
-                        } catch (InterruptedException e) {
-                            break;
+                            value = rset.getNext();
                         } catch (NoSuchElementException e) {
                             break;
                         } catch (InvocationTargetException e) {
+                            long etime = System.currentTimeMillis();
+                            logger.warn(e.getMessage(), e);
+                            System.out.println("\t>> cannot call agent.");
+                            System.out.println(" peerId: " + rset.getThisPeerId());
+                            AgentId agId = (AgentId) rset.getThisTargetId();
+                            System.out.println(" agentId: " + agId);
+                            System.out.println("\t## time (msec): " + (etime - stime));
                             continue;
                         }
                         long etime = System.currentTimeMillis();
@@ -1014,10 +1027,18 @@ public class PIAXShell {
             try {
                 value = rset.getNext(3000);
             } catch (InterruptedException e) {
+                System.out.println(" Timeout.");
                 break;
             } catch (NoSuchElementException e) {
                 break;
             } catch (InvocationTargetException e) {
+                long etime = System.currentTimeMillis();
+                logger.warn(e.getMessage(), e);
+                System.out.println("\t>> cannot call agent.");
+                System.out.println(" peerId: " + rset.getThisPeerId());
+                AgentId agId = (AgentId) rset.getThisTargetId();
+                System.out.println(" agentId: " + agId);
+                System.out.println("\t## time (msec): " + (etime - stime));
                 continue;
             }
             long etime = System.currentTimeMillis();
