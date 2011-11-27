@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="PIAXShell" default="make-jar" basedir=".">
+    <target name="-init">
+        <tstamp/>
+        <property name="Name" value="PIAXShell Build"/>
+        <property name="year" value="2011"/>
+        <property name="build.compiler" value="javac1.6"/>
+        <property name="ant.build.javac.target" value="1.6"/>
+        <property name="debug" value="true"/>
+        <property name="optimize" value="true"/>
+        <property name="deprecation" value="false"/>
+        <property name="use-zip-dist" value="false"/>
+
+        <!-- Directory Definitions -->
+        <property name="src.dir" value="${basedir}/src"/>
+        <property name="lib.dir" value="${basedir}/lib"/>
+        <property name="build.dir" value="${basedir}/build"/>
+        <property name="jarfile" value="PIAXShell.jar"/>
+    </target>
+
+    <target name="-prepare-build" depends="-init">
+        <mkdir dir="${build.dir}"/>
+    </target>
+
+    <target name="compile" depends="-prepare-build">
+        <javac srcdir="${src.dir}"
+                destdir="${build.dir}"
+                excludes="**/*.class,**/test/**,**/*~,**/.*"
+                debug="${debug}"
+                encoding="UTF8"
+                optimize="${optimize}"
+                deprecation="${deprecation}">
+            <classpath>
+                <pathelement path="."/>
+                <fileset dir="${lib.dir}" includes="**/*.jar"/>
+            </classpath>
+        </javac>
+    </target>
+
+    <target name="make-jar" depends="compile">
+        <jar jarfile="${jarfile}">
+            <fileset dir="${build.dir}">
+                <include name="**/*.class" />
+                <exclude name="**/test/**" />
+            </fileset>
+        </jar>
+    </target>
+
+    <target name="clean" depends="-init" description="Clean all build products.">
+        <delete dir="${build.dir}"/>
+    </target>
+</project>
