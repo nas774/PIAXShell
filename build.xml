@@ -12,19 +12,19 @@
         <property name="use-zip-dist" value="false"/>
 
         <!-- Directory Definitions -->
-        <property name="src.dir" value="${basedir}/src"/>
-        <property name="lib.dir" value="${basedir}/lib"/>
-        <property name="build.dir" value="${basedir}/build"/>
-        <property name="jarfile" value="PIAXShell.jar"/>
+        <property name="dir.src" value="${basedir}/src"/>
+        <property name="dir.lib" value="${basedir}/lib"/>
+        <property name="dir.build" value="${basedir}/build"/>
+        <property name="file.jar" value="PIAXShell.jar"/>
     </target>
 
     <target name="-prepare-build" depends="-init">
-        <mkdir dir="${build.dir}"/>
+        <mkdir dir="${dir.build}"/>
     </target>
 
     <target name="compile" depends="-prepare-build">
-        <javac srcdir="${src.dir}"
-                destdir="${build.dir}"
+        <javac srcdir="${dir.src}"
+                destdir="${dir.build}"
                 excludes="**/*.class,**/test/**,**/*~,**/.*"
                 debug="${debug}"
                 encoding="UTF8"
@@ -32,14 +32,14 @@
                 deprecation="${deprecation}">
             <classpath>
                 <pathelement path="."/>
-                <fileset dir="${lib.dir}" includes="**/*.jar"/>
+                <fileset dir="${dir.lib}" includes="**/*.jar"/>
             </classpath>
         </javac>
     </target>
 
     <target name="make-jar" depends="compile">
-        <jar jarfile="${jarfile}">
-            <fileset dir="${build.dir}">
+        <jar jarfile="${file.jar}">
+            <fileset dir="${dir.build}">
                 <include name="**/*.class" />
                 <exclude name="**/test/**" />
             </fileset>
@@ -47,6 +47,6 @@
     </target>
 
     <target name="clean" depends="-init" description="Clean all build products.">
-        <delete dir="${build.dir}"/>
+        <delete dir="${dir.build}"/>
     </target>
 </project>
