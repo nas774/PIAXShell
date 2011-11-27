@@ -68,7 +68,7 @@ public class PIAXShell {
 
     private static void printUsage() {
         System.out
-                .println("Usage: PIAXShell [options] name\n"
+                .println("Usage: piaxshell [options] name\n"
                         + "  -j means join automatically after booted.\n"
                         + "  -I means use interactive shell. (default)\n"
                         + "             if add '-' after 'I', disables interactive shell.\n"
@@ -80,8 +80,8 @@ public class PIAXShell {
                         + "             if add '-' after 'p', ignores default property file.\n"
                         + "  -a <agent dir> set agent class file directory to <agent dir>\n"
                         + "  -A <agent property> use agent property file or directory instead of default property to <agent property>\n"
-                        + "  ex. PIAXShell -r 1000 root\n"
-                        + "  ex. PIAXShell -r 1000 -s 192.168.1.101:2000 foo\n");
+                        + "  ex. piaxshell -r 1000 root\n"
+                        + "  ex. piaxshell -r 1000 -s 192.168.1.101:2000 foo\n");
     }
 
     /**
