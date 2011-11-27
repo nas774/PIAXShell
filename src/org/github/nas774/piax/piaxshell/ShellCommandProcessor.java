@@ -556,7 +556,7 @@ public class ShellCommandProcessor {
         ReturnSet<Object> rset = null;
         try {
             String query = String.format("%s inside rect(%f, %f, %f, %f)", 
-                    org.piax.agent.ConfigValues.LOCATION_ATTRIB_NAME,
+                    org.piax.agent.AgentConfigValues.LOCATION_ATTRIB_NAME,
                     lng, lat, w, h);
             rset = peer.getHome().discoveryCallAsync(query, method, args);
         } catch (IllegalStateException e) {

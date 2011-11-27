@@ -16,6 +16,7 @@ import org.piax.agent.AgentId;
 import org.piax.agent.AgentPeer;
 import org.piax.agent.NoSuchAgentException;
 import org.piax.trans.common.PeerLocator;
+import org.piax.trans.msgframe.MagicNumberConflictException;
 import org.piax.trans.ts.tcp.TcpLocator;
 import org.piax.trans.util.LocalInetAddrs;
 import org.piax.trans.util.MersenneTwister;
@@ -354,6 +355,9 @@ public class PIAXShell {
             return;
         } catch (IllegalArgumentException e) {
             logger.error("*** PIAX not started as Argument Error.", e);
+            return;
+        } catch (MagicNumberConflictException e) {
+            logger.error("*** PIAX not started as Transport-MagicNumber Confilict Error.", e);
             return;
         }
 
