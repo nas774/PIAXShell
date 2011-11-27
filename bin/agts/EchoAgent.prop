@@ -1,0 +1,2 @@
+piax.agent.class=samples.EchoAgent
+piax.agent.name=EchoAgent
