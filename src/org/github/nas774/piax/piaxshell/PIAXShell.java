@@ -100,7 +100,7 @@ public class PIAXShell {
             String tmp_piaxport = "";
             String tmp_seed = "";
             boolean tmp_autojoin = false;
-            boolean tmp_use_interactiveshell = false;
+            boolean tmp_use_interactiveshell = true;
             String tmp_agtdir = "";
             String tmp_agentprops_str = "";
 
@@ -165,10 +165,12 @@ public class PIAXShell {
                         if (serverprop.containsKey("piax.shell.useinteractive")) {
                             String tmp_use_interactiveshell_str = serverprop
                                     .getProperty("piax.shell.useinteractive");
-                            if (tmp_use_interactiveshell_str != null
-                                    && !tmp_use_interactiveshell_str.equals("")
-                                    && !tmp_use_interactiveshell_str.equals("0"))
-                                tmp_use_interactiveshell = true;
+                            tmp_use_interactiveshell_str = tmp_use_interactiveshell_str.trim();
+                            if (tmp_use_interactiveshell_str != null && 
+                                !tmp_use_interactiveshell_str.equals("")) {
+                                if (tmp_use_interactiveshell_str.equals("0"))
+                                    tmp_use_interactiveshell = false;
+                            }
                         }
                         // may
                         if (serverprop.containsKey("piax.agent.directory")) {
